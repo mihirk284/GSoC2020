@@ -128,6 +128,10 @@ TODO
 [FIX failing lidar visual integration test #121](https://github.com/ignitionrobotics/ign-rendering/pull/121)
 
 
-### Other contributions to Open Robotics outside the purview of GSoC
+## Issues
 
-[DARPA SubT Team Cerberus Robot Model - Gagarin](https://github.com/osrf/subt/pull/518)
+[Create lidar visualization #84](https://github.com/ignitionrobotics/ign-rendering/issues/84)
+
+## Other contributions to Open Robotics repositories outside the scope of GSoC
+
+[DARPA SubT Team CERBERUS Robot Model - Gagarin Sensor Configuration 1](https://github.com/osrf/subt/pull/518)
