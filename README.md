@@ -61,7 +61,7 @@ The task of the project is to create visualizations for lidar data in the igniti
 
 ## Reference
 
-This work was a part of the Gazebosim project. It was implemented in Gazebo as a visual and widely used within the robotics community. This work was to be ported to ign-rendering and made compatible with the new rendering framework, compatible with both Ogre1 and Ogre2.
+This work was a part of the GazeboSim project. It was implemented in Gazebo as a visual and widely used within the robotics community. This work was to be ported to ign-rendering and made compatible with the new rendering framework, compatible with both Ogre1 and Ogre2.
 
 <!-- ![Implementation in Gazebo Classic](./media/gazebo_cl_example.gif){:height="36px" width="36px"} -->
 
@@ -79,7 +79,7 @@ The implementation of the LaserVisual in Gazebo-Classic can be found [here](http
 
 The initial part of the work involved going through the code in the gazebo repository. Since this was my first introduction to any rendering engine, it took some time to understand how the engine, scene, visuals, geometries, and nodes are linked to one another and what purpose they serve in the rendering pipeline.
 
-Initially, it was confusing, but searching through the repository for examples and various implementations allowed me to get a good idea of the same. Since Gazebo classic's implementation is almost identical to the Ogre1 implementation in ign-rendering, it was easy to port a similar code to ign-rendering and test it. By the end of my first month of GSoC, I put together a basic example of the lidar visual. I opened a Pull Request to the ign-gazebo repository. You can view my Pull Request here :- [Added LidarVisual implementation for Ogre1, empty classes for Ogre2 #103](https://github.com/ignitionrobotics/ign-rendering/pull/103)
+Initially, it was not very clear, but searching through the repository for examples and various implementations allowed me to get a good idea of the same. Since Gazebo classic's implementation is almost identical to the Ogre1 implementation in ign-rendering, it was easy to port a similar code to ign-rendering and test it. By the end of my first month of GSoC, I put together a basic example of the lidar visual. I opened a Pull Request to the ign-gazebo repository. You can view my Pull Request here :- [Added LidarVisual implementation for Ogre1, empty classes for Ogre2 #103](https://github.com/ignitionrobotics/ign-rendering/pull/103)
 
 During this submission, I found out the importance of writing maintainable code. My mentors pointed out possible improvements to readability and optimizations for faster operation. My code was tested on the organization's [build farm](https://build.osrfoundation.org/) on different operating systems to ensure that the code compiles and is free of errors. This process is undoubtedly necessary. It is not always possible for me to test the same code on multiple operating systems locally due to hardware constraints.
 
@@ -102,7 +102,7 @@ In the above image, the sensor data can be seen visualized as points. This is si
 
 <img src="media/rays2.png" width="360" height="300"> <img src="media/rays1.png" width="360" height="300">
 
-The above image shows the visual as ray lines. This is significantly faster to render and less cluttered than the triangle strips visual shown above.
+The above image shows the visual as ray lines. This is significantly faster to render, and less cluttered than the triangle strips visual shown above.
 
 ---
 
@@ -118,7 +118,7 @@ The visuals have been implemented in Ogre2, as shown above.
 
 ---
 
-Once the points were implemented, it was noticed that the size of the points showing the lidar data reading remains constant. On zooming into the scene, the point size does not change despite the size of all other objects in the scene changing as per the camera's location in the scene. This caused difficulties in viewing the points. 
+Once the points were implemented, it was noticed that the size of the points showing the lidar data reading remains constant. On zooming into the scene, the point size does not change despite the size of all other objects changing as per the camera's location. This caused difficulties in viewing the points. 
 
 Additionally, the points rendered by in the scene did not show independent color. This was an issue as coloring the points gives the user more information about the location, intensity, or reflectivity of the obstacle, as seen by the sensor. This coloring of points is necessary for many robotic applications. The below images shows the importance of point coloring in robotic applications.
 
@@ -127,17 +127,21 @@ Additionally, the points rendered by in the scene did not show independent color
 
 The point colors help rudimentarily segment the part of the environment.
 
-We created a material that is displayed as a flat square facing the user's camera to add this capability. This material allows the user to change the color or every point and hence make use of this feature when the point cloud is being implemented.
+We created a material that is displayed as a flat square facing the user's camera to add this capability. This material allows the user to change the color of every point. This material can be used further when the point cloud is implemented.
 
 The Pull Request can be seen here:- [Add LidarVisual point colors for Ogre1 #124](https://github.com/ignitionrobotics/ign-rendering/pull/124)
 
 ---
 
-After this implementation was done, it was time to integrate the LidarVisual from the ign-rendering library into the ign-gazebo simulator. An interface had to be created using the Qt framework. Options are provided to the user to:-
+After this implementation was done, it was time to integrate the LidarVisual from the ign-rendering library into the ign-gazebo simulator. 
+
+The Pull Request can be tracked here:- [Visualize Lidar Plugin for ign-gazebo #301](https://github.com/ignitionrobotics/ign-gazebo/pull/301)
+
+An interface has been created using the Qt framework. Options are provided to:-
 
 >* Turn the visual ON/OFF.
 >* Select the message topic to visualize.
->* Select type of lidar visual between Points, Rays and Triangle Strips.
+>* Select type of lidar visual between Points, Rays, and Triangle Strips.
 >* Display sensor properties in the plugin window.
 >* Choose to display only the sensor rays that are hitting an obstacle.
 
@@ -148,11 +152,11 @@ The brief guide on the GUI can be seen here:-
 
 The above plugin GUI was implemented using Qt and C++.
 
-Some of the visuals of the working of the lidar visuals in action in an ign-gazebo environment can be seen here.
+An example of the code in action in an ign-gazebo environment is seen here.
 
 The world in the examples consists of a [Playground Model](https://app.ignitionrobotics.org/OpenRobotics/fuel/models/Playground) from the [Ignition Fuel Server](https://app.ignitionrobotics.org/dashboard).
 
-There is a stationary lidar sensor with the following sensor properties. The information is entered in SDFormat. For more information about this please visit [sdformat.org](http://sdformat.org/).
+There is a stationary lidar sensor with the following sensor properties. The information is entered in SDFormat. For more information about this, please visit [sdformat.org](http://sdformat.org/).
 
 ``` xml
 <sensor name='gpu_lidar' type='gpu_lidar'>
@@ -184,7 +188,7 @@ There is a stationary lidar sensor with the following sensor properties. The inf
 </sensor>
 ```
 
-There is another lidar modelled after the Hokoyu lidar sensor referenced from Gazebo. This mobile base is a diff-drive platform used for validation of various applications in ign-gazebo.
+There is another lidar modeled after the Hokoyu lidar sensor referenced from Gazebo. This mobile base is a diff-drive platform used for the validation of various applications in ign-gazebo.
 
 The sensor properties of the second lidar are:-
 
@@ -223,18 +227,30 @@ The sensor properties of the second lidar are:-
 	<visualize>true</visualize>
 </sensor>
 ```
-For the second sensor, noise has been added to approximate real-world behaviour.
+For the second sensor, the noise has been added to approximate real-world behavior.
 
-The following example shows how the visual is seen when the data from the stationary sensor is read and visualised as points.
+The following example shows how the visual is seen when the stationary sensor's data is read and visualized as points.
 
 ![ign-gazebo implementation 1](./media/points_Example1.gif)
 
-The option to visualise the points that are hitting the obstacles help the user to better make sense of the data from the lidar.
+The option to visualize the points that are hitting the obstacles helps the user better make sense of the lidar data.
 
-In the following media attachment, an example is shown where the sensor data from the mobile robot is read and visualised. Here the the different types of visuals are seen and the importance of this to the user is realised.
+In the following media attachment, an example is shown where the sensor data from the mobile robot is read and visualized. Here, the different visuals are seen, and the importance of this to the user is realized.
 
 ![ign-gazebo implementation 1](./media/hittingexample.gif)
 
-TODO
+Finally, a practical application of the robot moving is shown. In this application, the visual must be consistent and update correctly when the robot is in motion.
+
+![ign-gazebo implementation 1](./media/drive_example1.gif)
+
+
+With the above work, the GSoC project is concluded.
 
 ---
+## Acknowledgements
+
+I thank my mentors Ian Chen, Alejandro Hernández Cordero, for their constant support and guidance. I have learned a lot during the GSoC program under their guidance.
+
+I want to thank [Open Robotics](https://www.openrobotics.org/) for being a fantastic GSoC host organization. The organization included the interns in their weekly team meetings. It gave us an opportunity to observe and be a part of the larger Ignition project. The meetings gave the students insight into how large teams are working together on big projects and how smoothly the work is being done despite the constraints of the ongoing pandemic.
+
+With this program's conclusion, I am confident that I have learned many necessary skills and will continue to contribute to open source repositories and try my best to give back to the robotics community.
