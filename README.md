@@ -39,6 +39,8 @@ This document contains details of the work done and the code contributions made 
 
 # About Me
 
+<img src="media/MihirKulkarni.jpg" width="300" height="300">
+
 I am an incoming student into the Ph.D. in Computer Science program at the University Of Nevada, Reno. I graduated from Birla Institute of Technology and Science (BITS) Pilani, India in 2020, with a degree in Mechanical Engineering.
 
  I have been involved in robotics-related projects for over three years. I have learned a lot during this time, and ROS and Gazebo have played a major role during the journey.
