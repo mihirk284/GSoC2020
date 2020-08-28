@@ -2,12 +2,45 @@
 
 This document contains details of the work done and the code contributions made as a part of the GSoC 2020 program.
 
-TL;DR All the code contributions and Pull Requests can be found [here](#Code-Contributions-during-GSoC).
+
+## tl;dr Code Contributions during GSoC
+
+### Feature Additions
+
+[Added LidarVisual implementation for Ogre1, empty classes for Ogre2 #103](https://github.com/ignitionrobotics/ign-rendering/pull/103)
+
+[Add types for lidar visual #114](https://github.com/ignitionrobotics/ign-rendering/pull/114)
+
+[Ogre2 Implementation for Lidar Visual #116](https://github.com/ignitionrobotics/ign-rendering/pull/116/files)
+
+[Add LidarVisual point colors for Ogre1 #124](https://github.com/ignitionrobotics/ign-rendering/pull/124)
+
+[Visualize Lidar Plugin for ign-gazebo #301](https://github.com/ignitionrobotics/ign-gazebo/pull/301)
+
+### Bug Fixes, Minor Changes
+
+[Adding option for visibility #133](https://github.com/ignitionrobotics/ign-rendering/pull/133)
+
+[minor change in LidarVisual for the case when sensor data is more than sensor range #132](https://github.com/ignitionrobotics/ign-rendering/pull/132)
+
+[FIX failing lidar visual integration test #121](https://github.com/ignitionrobotics/ign-rendering/pull/121)
 
 
-## Project - Sensor Data Visualisation ([Open Robotics](https://www.openrobotics.org/))
+### Issues
 
-### Mentors - Ian Chen, Alejandro Hernández Cordero.
+[Create lidar visualization #84](https://github.com/ignitionrobotics/ign-rendering/issues/84)
+
+## Other contributions to Open Robotics repositories outside the scope of GSoC
+
+[DARPA SubT Team CERBERUS Robot Model - Gagarin Sensor Configuration 1](https://github.com/osrf/subt/pull/518)
+
+
+<hr style="border:3px solid gray"> </hr>
+
+
+# Project - Sensor Data Visualisation ([Open Robotics](https://www.openrobotics.org/))
+
+## Mentors - Ian Chen, Alejandro Hernández Cordero.
 
 This project is a part of a larger [Ignition](https://ignitionrobotics.org) simulation framework, which aims to provide a new simulation platform for roboticists. This project is a successor of the [Gazebo Simulator](http://gazebosim.org). This new simulation framework contains improvements and a redesign of the backbone of the simulation framework that exists in Gazebo. It supports distributed simulation, dynamic asset loading, and tunable performance. It also provides cross-platform support on Linux, macOS, and Windows, hence making simulation more accessible to all.
 
@@ -100,38 +133,108 @@ The Pull Request can be seen here:- [Add LidarVisual point colors for Ogre1 #124
 
 ---
 
-After this implementation was done, it was time to integrate the LidarVisual from the ign-rendering library into the ign-gazebo simulator. An interface had to be created using the Qt framework. The following options are provided to the user.
+After this implementation was done, it was time to integrate the LidarVisual from the ign-rendering library into the ign-gazebo simulator. An interface had to be created using the Qt framework. Options are provided to the user to:-
 
+>* Turn the visual ON/OFF.
+>* Select the message topic to visualize.
+>* Select type of lidar visual between Points, Rays and Triangle Strips.
+>* Display sensor properties in the plugin window.
+>* Choose to display only the sensor rays that are hitting an obstacle.
+
+
+The brief guide on the GUI can be seen here:-
+
+<img src="media/sc1.png" width="600" height="350">
+
+The above plugin GUI was implemented using Qt and C++.
+
+Some of the visuals of the working of the lidar visuals in action in an ign-gazebo environment can be seen here.
+
+The world in the examples consists of a [Playground Model](https://app.ignitionrobotics.org/OpenRobotics/fuel/models/Playground) from the [Ignition Fuel Server](https://app.ignitionrobotics.org/dashboard).
+
+There is a stationary lidar sensor with the following sensor properties. The information is entered in SDFormat. For more information about this please visit [sdformat.org](http://sdformat.org/).
+
+``` xml
+<sensor name='gpu_lidar' type='gpu_lidar'>
+	<topic>lidar</topic>
+	<update_rate>10</update_rate>
+	<lidar>
+	<scan>
+		<horizontal>
+		<samples>640</samples>
+		<resolution>1</resolution>
+		<min_angle>-1.396263</min_angle>
+		<max_angle>1.396263</max_angle>
+		</horizontal>
+		<vertical>
+		<samples>16</samples>
+		<resolution>1</resolution>
+		<min_angle>-0.261799</min_angle>
+		<max_angle>0.261799</max_angle>
+		</vertical>
+	</scan>
+	<range>
+		<min>0.08</min>
+		<max>10.0</max>
+		<resolution>0.01</resolution>
+	</range>
+	</lidar>
+	<alwaysOn>1</alwaysOn>
+	<visualize>true</visualize>
+</sensor>
+```
+
+There is another lidar modelled after the Hokoyu lidar sensor referenced from Gazebo. This mobile base is a diff-drive platform used for validation of various applications in ign-gazebo.
+
+The sensor properties of the second lidar are:-
+
+``` xml
+<sensor name='gpu_lidar' type='gpu_lidar'>
+	<pose>0 0 0 0 0 0</pose>
+	<topic>lidar2</topic>
+	<update_rate>10</update_rate>
+	<lidar>
+	<scan>
+		<horizontal>
+		<samples>160</samples>
+		<resolution>1</resolution>
+		<min_angle>-1.396263</min_angle>
+		<max_angle>1.396263</max_angle>
+		</horizontal>
+		<vertical>
+		<samples>1</samples>
+		<resolution>1</resolution>
+		<min_angle>0.0</min_angle>
+		<max_angle>0.0</max_angle>
+		</vertical>
+	</scan>
+	<range>
+		<min>0.08</min>
+		<max>10.0</max>
+		<resolution>0.01</resolution>
+	</range>
+	<noise>
+		<type>gaussian</type>
+		<mean>0</mean>
+		<stddev>0.1</stddev>
+	</noise>
+	</lidar>
+	<alwaysOn>1</alwaysOn>
+	<visualize>true</visualize>
+</sensor>
+```
+For the second sensor, noise has been added to approximate real-world behaviour.
+
+The following example shows how the visual is seen when the data from the stationary sensor is read and visualised as points.
+
+![ign-gazebo implementation 1](./media/points_Example1.gif)
+
+The option to visualise the points that are hitting the obstacles help the user to better make sense of the data from the lidar.
+
+In the following media attachment, an example is shown where the sensor data from the mobile robot is read and visualised. Here the the different types of visuals are seen and the importance of this to the user is realised.
+
+![ign-gazebo implementation 1](./media/hittingexample.gif)
 
 TODO
 
 ---
-
-# Code Contributions during GSoC
-
-## Feature Additions
-
-[Added LidarVisual implementation for Ogre1, empty classes for Ogre2 #103](https://github.com/ignitionrobotics/ign-rendering/pull/103)
-
-[Add types for lidar visual #114](https://github.com/ignitionrobotics/ign-rendering/pull/114)
-
-[Ogre2 Implementation for Lidar Visual #116](https://github.com/ignitionrobotics/ign-rendering/pull/116/files)
-
-[Add LidarVisual point colors for Ogre1 #124](https://github.com/ignitionrobotics/ign-rendering/pull/124)
-
-[Visualize Lidar Plugin for ign-gazebo #301](https://github.com/ignitionrobotics/ign-gazebo/pull/301)
-
-## Bug Fixes, Minor Changes
-
-[minor change in LidarVisual for the case when sensor data is more than sensor range #132](https://github.com/ignitionrobotics/ign-rendering/pull/132)
-
-[FIX failing lidar visual integration test #121](https://github.com/ignitionrobotics/ign-rendering/pull/121)
-
-
-## Issues
-
-[Create lidar visualization #84](https://github.com/ignitionrobotics/ign-rendering/issues/84)
-
-## Other contributions to Open Robotics repositories outside the scope of GSoC
-
-[DARPA SubT Team CERBERUS Robot Model - Gagarin Sensor Configuration 1](https://github.com/osrf/subt/pull/518)
