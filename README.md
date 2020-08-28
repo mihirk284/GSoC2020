@@ -37,6 +37,17 @@ This document contains details of the work done and the code contributions made 
 
 <hr style="border:3px solid gray"> </hr>
 
+# About Me
+
+I am an incoming student into the Ph.D. in Computer Science program at the University Of Nevada, Reno. I graduated from Birla Institute of Technology and Science (BITS) Pilani, India in 2020, with a degree in Mechanical Engineering.
+
+ I have been involved in robotics-related projects for over three years. I have learned a lot during this time, and ROS and Gazebo have played a major role during the journey.
+
+I completed my Bachelor's Thesis at the Autonomous Robots Lab, University of Nevada, Reno, where I worked on the motion planning for a reconfigurable aerial robotic system. My results were implemented using ROS and Gazebo and have now been published in a major conference. Through the lab, I am also a part of Team CERBERUS, participating in the DARPA Subterranean Challenge, focusing on autonomous search and rescue missions.
+
+During the GSoC program, I worked on porting the lidar visualization from Gazebo to the ign-rendering library and creating a GUI plugin for the user to control it. This plugin adds to the visualization capabilities of the IgnitionRobotics project. It allows the user to better understand the sensor data through customizable visuals.
+
+---
 
 # Project - Sensor Data Visualisation ([Open Robotics](https://www.openrobotics.org/))
 
