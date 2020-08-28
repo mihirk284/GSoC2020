@@ -159,7 +159,7 @@ An interface has been created using the Qt framework. Options are provided to:-
 
 The brief guide on the GUI can be seen here:-
 
-<img src="media/sc1.png" width="600" height="350">
+![plugin GUI guide](media/sc1.png)
 
 The above plugin GUI was implemented using Qt and C++.
 
