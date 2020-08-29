@@ -22,6 +22,8 @@ The simulation is being made more realistic, making use of advanced 3D graphics 
 
 During my GSoC, I worked directly on the ignition-rendering library to add sensor data visualization.
 
+---
+
 ## Task
 The project's task is to create visualizations for lidar data in the ignition-rendering library and load it as an interactive plugin in the simulation environment.
 
@@ -29,11 +31,11 @@ The project's task is to create visualizations for lidar data in the ignition-re
 
 The project involved adding a new type of sensor visual to the ign-rendering library. This visual is used to render data collected from a simulated lidar sensor. It extends the capabilities of the LaserVisual present in Gazebo and adds new features to it. Implementation of the visual is present in both Ogre1 and Ogre2.
 
-A new feature is added to the visual where the user can select whether they want to see only the rays hitting a particular obstacle. This means that the user can visually see the relevant information of the environment, as percieved by the robot, and avoid the clutter caused by visualisation of the lidar data that is of no use to the robot. This has been done as it is difficult for the user to make sense of the data when the sensor rays are too close to each other.
+A new feature is added to the visual where the user can select whether they want to see only the rays hitting a particular obstacle. This means that the user can visually see the relevant information of the environment, as perceived by the robot, and avoid the clutter caused by visualization of the lidar data that is of no use to the robot. This has been done as it is difficult for the user to make sense of the data when the sensor rays are displayed too close to each other.
 
-In addition to triangle strips, the user is provided options to visualize the sensor data as rays or points. This allows the user to choose the kind of visual they want based on their application and also makes rendering faster.
+In addition to triangle strips, the user is provided options to visualize the sensor data as rays or points. This allows the user to choose the kind of visual they want based on their application and makes rendering faster.
 
-A material is created and rendered as a flat square facing the user. This material is used for representing points, with each flat square capable of displaying an independent colour. It is identical to the way a pointcloud is displayed.
+A new material is created and rendered as a flat square facing the user. This material is used for representing points, with each flat square capable of displaying an independent color. It is identical to the way a point cloud is shown.
 
 
 <img src="media/points2.png" width="360" height="300"> <img src="media/points1.png" width="360" height="300">
@@ -72,3 +74,42 @@ In the following media attachment, an example is shown where the sensor data fro
 Finally, a practical application of the robot moving is shown below. In this application, the visual must be consistent and update correctly when the robot is in motion.
 
 ![ign-gazebo implementation 1](./media/drive_example1.gif)
+
+---
+
+## Where to find the code
+
+[Implementation for Ogre1](https://github.com/ignitionrobotics/ign-rendering/blob/master/ogre/src/OgreLidarVisual.cc)
+
+[Implementation for Ogre2](https://github.com/ignitionrobotics/ign-rendering/blob/master/ogre2/src/Ogre2LidarVisual.cc)
+
+[Example Code](https://github.com/ignitionrobotics/ign-rendering/tree/master/examples/lidar_visual)
+
+[GUI Plugin for ign-gazebo](https://github.com/ignitionrobotics/ign-gazebo/pull/301)
+
+## Contributions to repositories
+
+### Feature Additions
+
+[Added LidarVisual implementation for Ogre1, empty classes for Ogre2 #103](https://github.com/ignitionrobotics/ign-rendering/pull/103)
+
+[Add types for lidar visual #114](https://github.com/ignitionrobotics/ign-rendering/pull/114)
+
+[Ogre2 Implementation for Lidar Visual #116](https://github.com/ignitionrobotics/ign-rendering/pull/116/files)
+
+[Add LidarVisual point colors for Ogre1 #124](https://github.com/ignitionrobotics/ign-rendering/pull/124)
+
+[Visualize Lidar Plugin for ign-gazebo #301](https://github.com/ignitionrobotics/ign-gazebo/pull/301)
+
+### Bug Fixes, Minor Changes
+
+[Adding option for visibility #133](https://github.com/ignitionrobotics/ign-rendering/pull/133)
+
+[minor change in LidarVisual for the case when sensor data is more than sensor range #132](https://github.com/ignitionrobotics/ign-rendering/pull/132)
+
+[FIX failing lidar visual integration test #121](https://github.com/ignitionrobotics/ign-rendering/pull/121)
+
+
+### Issues
+
+[Create lidar visualization #84](https://github.com/ignitionrobotics/ign-rendering/issues/84)
