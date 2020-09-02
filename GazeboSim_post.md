@@ -23,7 +23,7 @@ Additionally, a new material has been created in the form of a flat-square facin
 
 The developed visual was integrated with ign-gazebo as a loadable GUI plugin. The user can select the sensor message to display from and set the properties of the visual through the GUI. The following image shows a brief guide on the plugin.
 
-<img src="media/ink_export.png">
+<img align="center" src="media/ink_export.png">
 
 
 ## Demos
